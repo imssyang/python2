@@ -1,0 +1,24 @@
+
+# dependencies
+yum-builddep python python-libs
+yum install libffi-devel sqlite-devel zlib zlib-devel
+
+apt-get build-dep python
+apt-get install libffi-dev libgdbm-dev libsqlite3-dev libssl-dev zlib1g-dev
+
+# compiles
+# http://www.linuxfromscratch.org/blfs/view/svn/general/python2.html
+./configure \
+    --prefix=/opt/python2 \
+    --enable-shared \
+    --with-system-expat \
+    --with-system-ffi \
+    --with-ensurepip=yes \
+    --enable-ipv6 \
+    --enable-unicode=ucs4 \
+    CFLAGS="-I/opt/bzip2/include -I/opt/expat/include -I/opt/ffi/include -I/opt/sqlite/include -I/opt/zlib/include" \
+    LDFLAGS="-L/opt/bzip2/lib -L/opt/expat/lib -L/opt/ffi/lib -L/opt/sqlite/lib -L/opt/zlib/lib -Wl,-rpath=/opt/python2/lib,--disable-new-dtags"
+
+make
+make install
+
